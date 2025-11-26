@@ -43,28 +43,30 @@ class Assembler
   private
 
   def parse_row(row)
-    operation = row[0]
+    operation = row[0].downcase
 
     args = {}
 
     case operation
-    when "5", "ld"
+    when "5", "ldc"
       # Загрузка константы
-      args[1] = row[1].to_i   # Адрес [B]
-      args[2] = row[2].to_i   # Константа [C]
-    when "4", "rd"
+      args[1] = row[1]   # Адрес [B]
+      args[2] = row[2]   # Константа [C]
+    when "4", "ldr"
       # Чтение значения из памяти
-      args[1] = row[1].to_i   # Адрес [B]
-      args[2] = row[2].to_i   # Адрес [C]
-    when "2", ""
+      args[1] = row[1]   # Адрес [B]
+      args[2] = row[2]   # Адрес [C]
+    when "2", "str"
       # Запись значения в память
-      args[1] = row[1].to_i   # Адрес [B]
-      args[2] = row[2].to_i   # Смещение [C]
-      args[3] = row[3].to_i   # Адрес [D]
+      args[1] = row[1]   # Адрес [B]
+      args[2] = row[2]   # Смещение [C]
+      args[3] = row[3]   # Адрес [D]
     when "1", "popcnt"
       # Унарная операция: popcnt()
-      args[1] = row[1].to_i   # Адрес [B]
-      args[2] = row[2].to_i   # Адрес [C]
+      args[1] = row[1]   # Адрес [B]
+      args[2] = row[2]   # Адрес [C]
+    else
+      puts "Pass"
     end
 
     Command.new(operation, args)
